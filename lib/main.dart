@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        child: Text('하이조주환',
+        child: Text('하이조주고',
       ),
     );
   }
