@@ -1,6 +1,7 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'components.dart';
+import 'Authorization.dart';
 
 class RegisterPage extends StatefulWidget{
   @override
@@ -8,9 +9,6 @@ class RegisterPage extends StatefulWidget{
 }
 
 class _RegisterPage extends State<RegisterPage>{
-  final TextEditingController emailcon = TextEditingController();
-  final TextEditingController passwordcon = TextEditingController();
-  final TextEditingController nicknamecon = TextEditingController();
 
 
   @override

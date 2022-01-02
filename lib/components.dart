@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'Authorization.dart';
+Map<String,dynamic>? s={'아이디':'','비밀번호':'','닉네임':'','비밀번호확인':''};
 
 class CustomTextField extends StatelessWidget {
   final String type;
+
   const CustomTextField({Key? key, required this.type}) : super(key: key);
 
   @override
@@ -22,7 +25,7 @@ class CustomTextField extends StatelessWidget {
         ),
         validator: (value) => value!.isEmpty?'$type이 입력되지 않았습니다':null,
         obscureText: type=='비밀번호' || type=='비밀번호 확인'?true:false,
-
+        onSaved:(value){ s![type]=value;}
 
       ),
     );
@@ -31,6 +34,10 @@ class CustomTextField extends StatelessWidget {
 
 class LoginForm extends StatelessWidget {
   LoginForm({Key? key}) : super(key: key);
+  String? email;
+  String? password;
+  String? nickname;
+
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -43,7 +50,15 @@ class LoginForm extends StatelessWidget {
           CustomTextField(type: '비밀번호'),
           SizedBox(height: 10,),
           TextButton(
-            onPressed: () {},
+            onPressed: () async {
+              if(_formKey.currentState!.validate()) {
+                _formKey.currentState!.save();
+               bool suc= await signin(s!['아이디'],s!['비밀번호']);
+               if(suc){
+                 Navigator.pushNamed(context, '/');
+               }
+              }
+            },
             child: Container(
               height: 50,
               width: 200,
@@ -79,7 +94,14 @@ class RegisterForm extends StatelessWidget {
             CustomTextField(type: '닉네임'),
             SizedBox(height: 10,),
             TextButton(
-              onPressed: () {},
+              onPressed: () async {
+                if(_formKey.currentState!.validate()) {
+                  _formKey.currentState!.save();
+                  bool suc= await register(s!['아이디'],s!['비밀번호'],s!['닉네임']);
+
+                  if(suc){Navigator.pushNamed(context, '/');}
+                }
+              },
               child: Container(
                 height: 50,
                 width: 200,

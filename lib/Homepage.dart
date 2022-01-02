@@ -6,6 +6,8 @@ class HomePage extends StatefulWidget {  @override
 }
 
 class _HomePage extends State<HomePage>{
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +39,16 @@ class _HomePage extends State<HomePage>{
         child: ListView(
           children: List.generate(10,_buildDiary)
         ),
+
+
       ),
+    floatingActionButton: FloatingActionButton(
+      onPressed:(){
+
+      } ,
+      child: Icon(Icons.add),
+      backgroundColor: Colors.brown,
+    ),
     );
 
   }
