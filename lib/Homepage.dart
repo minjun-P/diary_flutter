@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'Authorization.dart';
+
+
 
 class HomePage extends StatefulWidget {  @override
   State<StatefulWidget> createState() => _HomePage();
@@ -6,6 +10,17 @@ class HomePage extends StatefulWidget {  @override
 }
 
 class _HomePage extends State<HomePage>{
+  String text='로그인';
+  User? user;
+
+  @override
+  void initState()  {
+    super.initState();
+    user=  authservice.getcurrentUser();
+    if (user!=null){
+      text='로그아웃';
+    }
+  }
 
 
   @override
@@ -13,18 +28,23 @@ class _HomePage extends State<HomePage>{
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          '일기 리스트',
+          '${user?.displayName}의 일기 리스트',
           style: TextStyle(
             color: Colors.black
           ),
         ),
         actions: <Widget>[
           TextButton(
-            onPressed: () {
-              Navigator.pushNamed(context,'/login');
-            },
+            onPressed: () async {
+              if(user!=null){
+                await FirebaseAuth.instance.signOut();
+                Navigator.pushNamed(context,'/login');
+            }
+              else{
+                Navigator.pushNamed(context,'/login');
+              }},
             child: Text(
-                '로그인',
+                text,
               style: TextStyle(
                 color: Colors.black
               ),

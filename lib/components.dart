@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'Authorization.dart';
 Map<String,dynamic>? s={'아이디':'','비밀번호':'','닉네임':'','비밀번호확인':''};
@@ -53,8 +54,8 @@ class LoginForm extends StatelessWidget {
             onPressed: () async {
               if(_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-               bool suc= await signin(s!['아이디'],s!['비밀번호']);
-               if(suc){
+               User? suc= await authservice.signin(s!['아이디'],s!['비밀번호']);
+               if(suc!=null){
                  Navigator.pushNamed(context, '/');
                }
               }
@@ -97,9 +98,11 @@ class RegisterForm extends StatelessWidget {
               onPressed: () async {
                 if(_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
-                  bool suc= await register(s!['아이디'],s!['비밀번호'],s!['닉네임']);
+                 User? suc= await authservice.register(s!['아이디'],s!['비밀번호'],s!['닉네임']);
 
-                  if(suc){Navigator.pushNamed(context, '/');}
+                  if(suc!=null){
+                    suc= await authservice.signin(s!['아이디'],s!['비밀번호']);
+                    Navigator.pushNamed(context, '/');}
                 }
               },
               child: Container(

@@ -1,32 +1,51 @@
 import 'package:firebase_auth/firebase_auth.dart';
-/*class authservice(){
-  final auth.FirebaseAuth _firebaseauth=auth.FirebaseAuth.instance();
-  User ? _userFromFiewbase(auth.User? user){
-    if(user==null)
-{ return null;
-}
-    return User(user.uid,user.email);
-}
-}*/
 
-Future<bool> signin( String email, String password ) async {
+class authservice {
+
+static Future<User?> signin( String email, String password ) async {
+  User? user;
+try {
+UserCredential s= await FirebaseAuth.instance.signInWithEmailAndPassword(
+email: email, password: password);
+return s.user;
+}catch(e){
+print(e);
+return null;
+}
+}
+static Future<User?> register( String email, String password ,String nickname) async {
+  User? user;
   try {
-    FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email, password: password);
-    return true;
+    UserCredential s= await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+    await user!.updateDisplayName(nickname);
+    await user.reload();
+    user=FirebaseAuth.instance.currentUser;
+    return user;
+
   }catch(e){
     print(e);
-    return false;
-  }
-}
-
-Future<bool> register( String email, String password ,String nickname) async {
-  try {
-    FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
-    return true;
-  }catch(e){
-    print(e);
-    return false;
+    return null;
   }
 
 }
+static Future<User?> refreshUser(User user) async {
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  await user.reload();
+  User? refreshedUser = auth.currentUser;
+
+  return refreshedUser;
+}
+
+static User? getcurrentUser( ) {
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  User? currentuser = auth.currentUser;
+
+  return currentuser;
+}
+
+}
+
+
+
