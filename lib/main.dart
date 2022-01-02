@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'Homepage.dart';
 import 'Register.dart';
+import 'login.dart';
 
 
 void main() {
@@ -24,12 +25,23 @@ class MyApp extends StatelessWidget {
 
 
       },
+      theme: ThemeData(
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.white,
+          iconTheme: IconThemeData(
+            color: Colors.black
+          )
+        ),
+
+
+
+      ),
 
     );
 
   }
 }
-
+/**
 class LoginPage extends StatefulWidget{
   @override
   State<StatefulWidget> createState()=>_LoginPage();
@@ -87,3 +99,4 @@ class LoginPage extends StatefulWidget{
    }
 
  }
+*/
