@@ -1,12 +1,24 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'Authorization.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_s';
+
 class Diary {
   String? title;
   String? content;
+
+  Diary(this.title, this.content);
+
+  toJSON(){
+    return{
+      'title':title,
+      'content':content
+    };
+  }
 }
+
 
 
 class CreatePage extends StatefulWidget {
@@ -26,7 +38,7 @@ class _CreatePageState extends State<CreatePage> {
   final _contentCon = TextEditingController();
 
   // 입력 값을 저장할 객체 생성
-  Diary diary = Diary();
+  Diary diary = Diary("","");
 
   // 포커스 노드 선언해보기
   final _contentFocusNode = FocusNode();
