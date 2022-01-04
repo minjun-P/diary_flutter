@@ -7,7 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 final database=FirebaseDatabase(databaseURL: 'https://diaryproto-default-rtdb.asia-southeast1.firebasedatabase.app/');
 
 class Diary {
-  String? key;
+  String? key;  //document마다 hash로 부여된 키값저장 (수정,삭제)에 필요
   String? title;
   String? content;
 

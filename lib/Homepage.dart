@@ -144,21 +144,3 @@ class _HomePage extends State<HomePage>{
   }
 }
 
-Widget _buildDiary (int index) {
-  return  Padding(
-      padding: const EdgeInsets.only(bottom: 20),
-      child: Container(
-        height: 150,
-        decoration: BoxDecoration(
-          color: Colors.amberAccent,
-          borderRadius: BorderRadius.circular(15)
-        ),
-        child: Center(
-          child: Text(
-            '일기가 들어갈 위치',
-          ),
-        ),
-
-      ),
-    );
-}
