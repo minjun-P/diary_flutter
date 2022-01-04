@@ -1,3 +1,6 @@
+import 'package:diary/create_diary.dart';
+
+import 'profile.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'Homepage.dart';
@@ -23,7 +26,9 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login':(context)=> LoginPage(),
         '/':(context)=> HomePage(),
-        '/register':(context)=>RegisterPage()
+        '/register':(context)=>RegisterPage(),
+        '/profile':(conetext)=>ProfilePage(),
+        '/create':(context)=>CreatePage()
 
 
       },

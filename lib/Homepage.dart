@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'Authorization.dart';
-
-
+User? curuser=FirebaseAuth.instance.currentUser;
 
 class HomePage extends StatefulWidget {  @override
   State<StatefulWidget> createState() => _HomePage();
@@ -11,13 +9,13 @@ class HomePage extends StatefulWidget {  @override
 
 class _HomePage extends State<HomePage>{
   String text='로그인';
-  User? user;
+
 
   @override
-  void initState()  {
+  void initState() {
+    // TODO: implement initState
     super.initState();
-    user=  authservice.getcurrentUser();
-    if (user!=null){
+    if (curuser!=null){
       text='로그아웃';
     }
   }
@@ -28,21 +26,16 @@ class _HomePage extends State<HomePage>{
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          '${user?.displayName}의 일기 리스트',
+          '일기 리스트',
           style: TextStyle(
             color: Colors.black
           ),
         ),
         actions: <Widget>[
           TextButton(
-            onPressed: () async {
-              if(user!=null){
-                await FirebaseAuth.instance.signOut();
-                Navigator.pushNamed(context,'/login');
-            }
-              else{
-                Navigator.pushNamed(context,'/login');
-              }},
+            onPressed: () {
+              Navigator.pushNamed(context,'/login');
+            },
             child: Text(
                 text,
               style: TextStyle(
@@ -50,6 +43,13 @@ class _HomePage extends State<HomePage>{
               ),
 
             ),
+          ),
+          // 임시로 프로필 화면으로 넘어가는 아이콘버튼 생성, 나중엔 이걸 로그인시에만 활성화시켜야 할 듯.
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context,'/profile');
+            },
+            icon: Icon(Icons.person),
           )
         ]
         ,),
@@ -64,7 +64,7 @@ class _HomePage extends State<HomePage>{
       ),
     floatingActionButton: FloatingActionButton(
       onPressed:(){
-
+        Navigator.pushNamed(context,'/create');
       } ,
       child: Icon(Icons.add),
       backgroundColor: Colors.brown,

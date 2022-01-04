@@ -1,7 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'Authorization.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 Map<String,dynamic>? s={'아이디':'','비밀번호':'','닉네임':'','비밀번호확인':''};
+User? curUser=authservice.getcurrentUser();
 
 class CustomTextField extends StatelessWidget {
   final String type;
@@ -98,13 +99,15 @@ class RegisterForm extends StatelessWidget {
               onPressed: () async {
                 if(_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
-                 User? suc= await authservice.register(s!['아이디'],s!['비밀번호'],s!['닉네임']);
+                  User? suc= await authservice.register(s!['아이디'],s!['비밀번호'],s!['닉네임']);
 
                   if(suc!=null){
-                    suc= await authservice.signin(s!['아이디'],s!['비밀번호']);
-                    Navigator.pushNamed(context, '/');}
+                      Navigator.pushNamed(context, '/');
+                    }
+
+                  }
                 }
-              },
+              ,
               child: Container(
                 height: 50,
                 width: 200,
