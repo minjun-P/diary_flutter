@@ -137,11 +137,13 @@ class _CreatePageState extends State<CreatePage> {
                         // 위 텍스트 필드 둘 다에 값이 있을 때 버튼이 활성화되도록!!
                         // null이면 버튼이 자동 비활성화 상태가 됨
                         onPressed:
+
                         _titleCon.text.isNotEmpty && _contentCon.text.isNotEmpty?
                             () {
                         setState(() {
                           _form.currentState!.save();
                           addDiarytoDB(Diary(diary.title,diary.content));
+                          Navigator.pop(context);
                         });
                         _titleCon.clear();
                         _contentCon.clear();
@@ -156,12 +158,7 @@ class _CreatePageState extends State<CreatePage> {
                  * 거니깐 코드 작성할 때 삭제해도 돼!
                  */
 
-                Text('값 확인용, 코드 다 짜면 삭제해~'
-                    '\n 값을 diary라는 객체에 다 담아놓음. 삭제 누르면 객체 내부 변수를 null로 바꿈!'
-                    '\n 글고 validator는 따로 안 넣었고 제목과 내용 둘 다 있어야 버튼 자체가 활성화 되게 해놓음',style: TextStyle(fontSize: 18),),
-                Divider(thickness: 2,),
-                Text('diary.title =>  '+(diary.title ?? '값 없음')),
-                Text('diary.content =>  '+(diary.content ?? '값 없음')),
+
                 Align(
                   child: CupertinoButton(
                       child: Text('삭제', style: TextStyle(color: Colors.black),),
