@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 final database=FirebaseDatabase(databaseURL: 'https://diaryproto-default-rtdb.asia-southeast1.firebasedatabase.app/');
 
 class Diary {
+  String? key;
   String? title;
   String? content;
 

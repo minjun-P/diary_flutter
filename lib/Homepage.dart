@@ -16,7 +16,9 @@ class _HomePage extends State<HomePage>{
   String text='로그인';
   List<Diary> diarylist=new List.empty(growable: true);
 
+  void deleteDiary(int index){
 
+  }
   @override
   void initState() {
     // TODO: implement initState
@@ -30,7 +32,9 @@ class _HomePage extends State<HomePage>{
       print(event.snapshot.value.toString());
       final data =Map<String,dynamic>.from(event.snapshot.value as Map);
       setState(() {
-        diarylist.add(Diary(data['title'],data['content']));
+        Diary s=Diary(data['title'],data['content']);
+        s.key=event.snapshot.key;
+        diarylist.add(s);
         print("diaryadded");
       });
     });
@@ -84,7 +88,38 @@ class _HomePage extends State<HomePage>{
                           child:SizedBox(
                           child:GestureDetector(
                           onTap: (){},
-                          onLongPress:(){},
+                          onLongPress:(){
+                            showDialog(context: context, builder: (context)
+                            { return AlertDialog(
+                              title:Text(diarylist[index].title!),
+                              content: Text('삭제하시겠습니까'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed:(){
+                                    String userdir='users/${authservice.getcurrentUser()?.uid}';
+
+                                    database.ref(userdir).child(diarylist[index].key!).remove().then(
+                                    (_){
+                                      setState(() {
+                                        diarylist.removeAt(index);
+                                        Navigator.pop(context);
+                                      });
+                                    }
+                                    );
+                                  },
+                                  child:Text('예'),
+                                ),
+                                TextButton(
+                                  onPressed:(){
+                                    Navigator.pop(context);
+                                  },
+                                  child:Text('아니오'),
+                                )
+                              ],
+                            );
+
+                            });
+                          },
                           child:Text(diarylist[index].content!,textAlign: TextAlign.center,style: TextStyle(color: Colors.blue),)
                           ),
 
