@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+User? curuser=FirebaseAuth.instance.currentUser;
 
 class HomePage extends StatefulWidget {  @override
   State<StatefulWidget> createState() => _HomePage();
@@ -6,6 +8,17 @@ class HomePage extends StatefulWidget {  @override
 }
 
 class _HomePage extends State<HomePage>{
+  String text='로그인';
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (curuser!=null){
+      text='로그아웃';
+    }
+  }
 
 
   @override
@@ -24,7 +37,7 @@ class _HomePage extends State<HomePage>{
               Navigator.pushNamed(context,'/login');
             },
             child: Text(
-                '로그인',
+                text,
               style: TextStyle(
                 color: Colors.black
               ),

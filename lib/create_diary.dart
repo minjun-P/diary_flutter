@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-
+import 'Authorization.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_s';
 class Diary {
   String? title;
   String? content;

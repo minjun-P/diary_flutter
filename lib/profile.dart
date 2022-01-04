@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'Authorization.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -10,6 +11,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStateMixin {
   TabController? _tabController;
+  String? usernickname=authservice.getcurrentUser()!.displayName;
 
   @override
   void initState() {
@@ -48,7 +50,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
                 ),
                   SizedBox(height: 5,),
                   Text(
-                    '신짱구',
+                    usernickname!,
                     style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),
                   )
                 ]
