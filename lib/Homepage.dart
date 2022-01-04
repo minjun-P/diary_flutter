@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'Authorization.dart';
 import 'create_diary.dart';
 import 'dart:convert';
-User? curuser=FirebaseAuth.instance.currentUser;
+User? curuser=authservice.getcurrentUser();
 final database=FirebaseDatabase(databaseURL: 'https://diaryproto-default-rtdb.asia-southeast1.firebasedatabase.app/');
 
 class HomePage extends StatefulWidget {  @override
