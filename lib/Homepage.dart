@@ -1,6 +1,11 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'Authorization.dart';
+import 'create_diary.dart';
+import 'dart:convert';
 User? curuser=FirebaseAuth.instance.currentUser;
+final database=FirebaseDatabase(databaseURL: 'https://diaryproto-default-rtdb.asia-southeast1.firebasedatabase.app/');
 
 class HomePage extends StatefulWidget {  @override
   State<StatefulWidget> createState() => _HomePage();
@@ -9,6 +14,7 @@ class HomePage extends StatefulWidget {  @override
 
 class _HomePage extends State<HomePage>{
   String text='로그인';
+  List<Diary> diarylist=new List.empty(growable: true);
 
 
   @override
@@ -18,6 +24,16 @@ class _HomePage extends State<HomePage>{
     if (curuser!=null){
       text='로그아웃';
     }
+    String userdir='users/${authservice.getcurrentUser()?.uid}';
+
+    database.ref(userdir).onChildAdded.listen((event) {
+      print(event.snapshot.value.toString());
+      final data =Map<String,dynamic>.from(event.snapshot.value as Map);
+      setState(() {
+        diarylist.add(Diary(data['title'],data['content']));
+        print("diaryadded");
+      });
+    });
   }
 
 
@@ -56,16 +72,35 @@ class _HomePage extends State<HomePage>{
 
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-        child: ListView(
-          children: List.generate(10,_buildDiary)
+        child: Center(
+          child:diarylist.length==0?CircularProgressIndicator():
+              GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+                  itemBuilder: (context,index){
+                    return Card(
+                    child:GridTile(
+                    child: Container(
+                          padding: EdgeInsets.all(20),
+                          child:SizedBox(
+                          child:GestureDetector(
+                          onTap: (){},
+                          onLongPress:(){},
+                          child:Text(diarylist[index].content!,textAlign: TextAlign.center,style: TextStyle(color: Colors.blue),)
+                          ),
+
+                          )
+    ),                    header:Text(diarylist[index].title!),
+                    )
+                    );
+    } ,itemCount: diarylist.length,
         ),
 
 
-      ),
+      )),
     floatingActionButton: FloatingActionButton(
-      onPressed:(){
-        Navigator.pushNamed(context,'/create');
-      } ,
+      onPressed:() {
+        Navigator.pushNamed(context, '/create');
+      },
       child: Icon(Icons.add),
       backgroundColor: Colors.brown,
     ),

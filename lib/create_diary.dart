@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'Authorization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+final database=FirebaseDatabase(databaseURL: 'https://diaryproto-default-rtdb.asia-southeast1.firebasedatabase.app/');
 
 class Diary {
   String? title;
@@ -53,6 +54,13 @@ class _CreatePageState extends State<CreatePage> {
     _contentFocusNode.dispose();
     super.dispose();
 
+  }
+  bool addDiarytoDB( Diary s){
+
+    String userdir='users/${authservice.getcurrentUser()?.uid}';
+    bool returnvalue=true;
+    database.ref(userdir).push().set(s.toJSON()).catchError((onError)=> returnvalue=false);
+    return returnvalue;
   }
 
   @override
@@ -133,6 +141,7 @@ class _CreatePageState extends State<CreatePage> {
                             () {
                         setState(() {
                           _form.currentState!.save();
+                          addDiarytoDB(Diary(diary.title,diary.content));
                         });
                         _titleCon.clear();
                         _contentCon.clear();

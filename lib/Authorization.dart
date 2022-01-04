@@ -2,7 +2,8 @@ import 'package:diary/create_diary.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
-FirebaseDatabase database= FirebaseDatabase.instance;
+FirebaseDatabase database=FirebaseDatabase(databaseURL: 'https://diaryproto-default-rtdb.asia-southeast1.firebasedatabase.app/');
+
 class authservice {
    //유저로그
   static Future<User?> signin( String email, String password ) async {

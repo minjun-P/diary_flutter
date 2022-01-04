@@ -6,14 +6,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'Homepage.dart';
 import 'Register.dart';
 import 'login.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 
-
+final database=FirebaseDatabase(databaseURL: 'https://diaryproto-default-rtdb.asia-southeast1.firebasedatabase.app/');
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp( MyApp());
+  print(database.databaseURL);
 }
 
 class MyApp extends StatelessWidget {
